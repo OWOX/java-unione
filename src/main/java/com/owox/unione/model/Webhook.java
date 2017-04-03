@@ -17,6 +17,7 @@ public class Webhook extends WebhookDescription {
     private long id;
     private EventFormat eventFormat;
     private int maxParallel = 1;
+    private int singleEvent = 0;
     private WebhookEventsDescription events;
 
     public Webhook(String url) {

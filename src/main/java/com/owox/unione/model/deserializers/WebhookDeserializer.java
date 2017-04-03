@@ -17,9 +17,11 @@ public class WebhookDeserializer extends JsonDeserializer<Webhook> {
 
     private static final String SOURCE_EVENT_FORMAT_FIELD = "eventFormat";
     private static final String SOURCE_MAX_PARALLEL_FIELD = "maxParallel";
+    private static final String SOURCE_SINGLE_EVENT_FIELD = "useSingleEvent";
 
     private static final String TARGET_EVENT_FORMAT_FIELD = "event_format";
     private static final String TARGET_MAX_PARALLEL_FIELD = "max_parallel";
+    private static final String TARGET_SINGLE_EVENT_FIELD = "single_event";
 
 
     @Override
@@ -39,6 +41,13 @@ public class WebhookDeserializer extends JsonDeserializer<Webhook> {
             int val = objectNode.get(SOURCE_MAX_PARALLEL_FIELD).asInt();
             objectNode.put(TARGET_MAX_PARALLEL_FIELD, val);
             objectNode.remove(SOURCE_MAX_PARALLEL_FIELD);
+        }
+
+        if (objectNode.get(TARGET_SINGLE_EVENT_FIELD) == null) {
+
+            int val = objectNode.get(SOURCE_SINGLE_EVENT_FIELD).asInt();
+            objectNode.put(TARGET_SINGLE_EVENT_FIELD, val);
+            objectNode.remove(SOURCE_SINGLE_EVENT_FIELD);
         }
 
         return MAPPER.readValue(objectNode, Webhook.class);
